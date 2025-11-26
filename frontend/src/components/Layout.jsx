@@ -17,7 +17,7 @@ const Layout = ({ children, title }) => {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden lg:pl-64">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={user} title={title} />
         
         <main className="flex-1 overflow-auto p-6 lg:p-8">
