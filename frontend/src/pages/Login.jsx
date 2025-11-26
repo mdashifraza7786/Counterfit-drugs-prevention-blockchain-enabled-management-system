@@ -121,7 +121,13 @@ const Login = () => {
         </div>
 
         <div className="mt-6 text-center text-xs text-gray-500">
-          <p>Demo Credentials: manufacturer1 / password123</p>
+          <div className="space-y-1">
+            <p className="font-semibold mb-2">Demo Credentials (password123)</p>
+            <p>Manufacturer: manufacturer1</p>
+            <p>Distributor: distributor1</p>
+            <p>Pharmacy: pharmacy1</p>
+            <p>Regulator: regulator1</p>
+          </div>
         </div>
       </div>
     </div>
