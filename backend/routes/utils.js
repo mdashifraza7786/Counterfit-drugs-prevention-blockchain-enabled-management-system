@@ -58,4 +58,76 @@ router.get('/users/user/:userId', async (req, res) => {
   }
 });
 
+
+import { generateKeyPair } from '../utils/crypto.js';
+
+router.post('/seed', async (req, res) => {
+  try {
+    await User.deleteMany({});
+    console.log('Cleared existing users');
+
+    const keyPair = generateKeyPair();
+
+    const users = [
+      {
+        userId: 'MAN-001',
+        username: 'manufacturer1',
+        password: 'password123',
+        role: 'MANUFACTURER',
+        organizationName: 'PharmaCorp Manufacturing',
+        publicKey: keyPair.publicKey,
+        privateKey: keyPair.privateKey
+      },
+      {
+        userId: 'DIS-001',
+        username: 'distributor1',
+        password: 'password123',
+        role: 'DISTRIBUTOR',
+        organizationName: 'MediDistribute Inc'
+      },
+      {
+        userId: 'DIS-002',
+        username: 'distributor2',
+        password: 'password123',
+        role: 'DISTRIBUTOR',
+        organizationName: 'HealthSupply Co'
+      },
+      {
+        userId: 'PHA-001',
+        username: 'pharmacy1',
+        password: 'password123',
+        role: 'PHARMACY',
+        organizationName: 'City Pharmacy'
+      },
+      {
+        userId: 'PHA-002',
+        username: 'pharmacy2',
+        password: 'password123',
+        role: 'PHARMACY',
+        organizationName: 'HealthPlus Pharmacy'
+      },
+      {
+        userId: 'REG-001',
+        username: 'regulator1',
+        password: 'password123',
+        role: 'REGULATOR',
+        organizationName: 'Drug Regulatory Authority'
+      }
+    ];
+
+    for (const userData of users) {
+      await User.create(userData);
+    }
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Database seeded successfully',
+      users: users.map(u => ({ username: u.username, role: u.role, password: 'password123' }))
+    });
+  } catch (error) {
+    console.error('Seed failed:', error);
+    res.status(500).json({ success: false, message: 'Seeding failed: ' + error.message });
+  }
+});
+
 export default router;
